@@ -2,7 +2,6 @@ include("hm_lib/hm_global")
 include("hm_lib/hm_functions")
 
 class hm_sign_tl extends hm_base_tl {
-  desc = null
   desc_name = null
   pos = null
   num_exec = 1
@@ -10,13 +9,35 @@ class hm_sign_tl extends hm_base_tl {
     desc_name = sign_name
     pos = coord3d(p[0],p[1],p[2])
     num_exec = num
-    desc = hm_get_sign_desc(desc_name)
     hm_commands.append(this)
   }
-  function exec(player, origin) {
-    if (desc==null) {
-      return "Sign " + desc_name + " is not found!"
+  
+  // returns [error_message, desc]
+  function _get_desc(){
+    if(desc_name.slice(0,2)=="?f") {
+      local key_str = "s" + desc_name.slice(2)
+      local d = hm_found_desc.get(key_str)
+      if(d==null) {
+        return ["Sign key " + desc_name.slice(2) + " is not defined.", null]
+      } else if(d[0]==null) {
+        return ["No sign was detected between " + hm_found_desc.get_pos_str(key_str), null]
+      }
+      return [null, d[0]]
+    } else {
+      local d = hm_get_sign_desc(desc_name)
+      if(d==null) {
+        return ["Sign " + desc_name + " is not found!", null]
+      }
+      return [null, d]
     }
+  }
+  
+  function exec(player, origin) {
+    local dr = _get_desc()
+    if(dr[0]!=null) {
+      return dr[0] // there was a error in obtaining the desc
+    }
+    local desc = dr[1]
     // check if the way exists
     local s_pos = origin + pos
     for(local i=0; i<num_exec; i++) {

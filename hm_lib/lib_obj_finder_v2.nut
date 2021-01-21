@@ -1,5 +1,5 @@
-// written by 128na. obtained from https://github.com/128na/sugoi-simutrans-squirrel-scripts/blob/master/lib_obj_finder_v2.nut
-// 2021/01/20
+// originally obtained from https://github.com/128na/sugoi-simutrans-squirrel-scripts/blob/master/lib_obj_finder_v2.nut at 2021/01/20
+// some functions were modified by himeshi
 
 class ObjFinder {
     player = null;
@@ -57,55 +57,42 @@ class ObjFinder {
         }
     }
 
-    // 指定軌道の架線を指定座標空間から探す
-    function findWayObj(way) {
+    // 架線を指定座標空間から探す
+    function findWayObj() {
         foreach(pos in _coord3dGenerator()) {
             local tile = tile_x(pos.x, pos.y, pos.z);
-            local moWay = tile.find_object(mo_way);
-            local isSameWayType = moWay && moWay.get_waytype() == way.get_waytype();
-            if (isSameWayType) {
-                local moWobj = tile.find_object(mo_wayobj);
-                local hasOwnedWay = moWobj && moWobj.get_owner().get_name() == player.get_name();
-                if (hasOwnedWay) {
-                    return moWobj.get_desc();
-                }
+            local moWobj = tile.find_object(mo_wayobj);
+            local hasOwnedWay = moWobj && moWobj.get_owner().get_name() == player.get_name();
+            if (hasOwnedWay) {
+                return moWobj.get_desc();
             }
         }
     }
 
-    // 指定軌道の標識を指定座標空間から探す
-    function findSign(way) {
+    // 標識を指定座標空間から探す
+    function findSign() {
         foreach(pos in _coord3dGenerator()) {
             local tile = tile_x(pos.x, pos.y, pos.z);
-            local moWay = tile.find_object(mo_way);
-            local isSameWayType = moWay && moWay.get_waytype() == way.get_waytype();
-            if (isSameWayType) {
-                local moSign = tile.find_object(mo_signal);
-                if (moSign) {
-                    return moSign.get_desc();
-                }
-                local moRSign = tile.find_object(mo_roadsign);
-                if (moRSign) {
-                    return moRSign.get_desc();
-                }
+            local moSign = tile.find_object(mo_signal);
+            if (moSign) {
+                return moSign.get_desc();
+            }
+            local moRSign = tile.find_object(mo_roadsign);
+            if (moRSign) {
+                return moRSign.get_desc();
             }
         }
     }
 
-    // 指定軌道のプラットフォームを指定座標空間から探す
-    function findPlatform(way) {
+    // プラットフォームを指定座標空間から探す
+    function findPlatform() {
         foreach(pos in _coord3dGenerator()) {
             local tile = tile_x(pos.x, pos.y, pos.z);
-            local moWay = tile.find_object(mo_way);
-            local isSameWayType = moWay && moWay.get_waytype() == way.get_waytype();
-            if (isSameWayType) {
-                local moBld = tile.find_object(mo_building);
-
-                local hasOwnedPlatform = moBld &&
-                    moBld.get_owner().get_name() == player.get_name();
-                if (hasOwnedPlatform) {
-                    return moBld.get_desc();
-                }
+            local moBld = tile.find_object(mo_building);
+            local hasOwnedPlatform = moBld &&
+                moBld.get_owner().get_name() == player.get_name();
+            if (hasOwnedPlatform) {
+                return moBld.get_desc();
             }
         }
     }

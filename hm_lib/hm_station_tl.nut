@@ -16,10 +16,34 @@ class hm_station_tl extends hm_base_tl {
     }
     hm_commands.append(this)
   }
-  function exec(player, origin) {
-    if (desc==null) {
-      return "Station " + desc_name + " is not found!"
+  
+  // returns [error_message, desc]
+  function _get_desc(){
+    if(desc_name.slice(0,2)=="?f") {
+      local key_str = "p" + desc_name.slice(2)
+      local d = hm_found_desc.get(key_str)
+      if(d==null) {
+        return ["Station key " + desc_name.slice(2) + " is not defined.", null]
+      } else if(d[0]==null) {
+        return ["No station was detected between " + hm_found_desc.get_pos_str(key_str), null]
+      }
+      return [null, d[0]]
+    } else {
+      foreach (d in building_desc_x.get_building_list(building_desc_x.station)) {
+        if(d.get_name()==desc_name) {
+          return [null, d]
+        }
+      }
+      return ["Station " + desc_name + " is not found!", null]
     }
+  }
+  
+  function exec(player, origin) {
+    local dr = _get_desc()
+    if(dr[0]!=null) {
+      return dr[0] // there was a error in obtaining the desc
+    }
+    local desc = dr[1]
     return command_x.build_station(player, origin+pos, desc);
   }
 }

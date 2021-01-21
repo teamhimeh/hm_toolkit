@@ -11,10 +11,37 @@ class hm_wayobj_tl extends hm_base_tl {
     ziel = coord3d(z[0],z[1],z[2])
     hm_commands.append(this)
   }
+  
+  // returns [error_message, desc]
+  function _get_desc(){
+    if(desc_name.slice(0,2)=="?f") {
+      local key_str = "c" + desc_name.slice(2)
+      local d = hm_found_desc.get(key_str)
+      if(d==null) {
+        return ["Wayobj key " + desc_name.slice(2) + " is not defined.", null]
+      } else if(d[0]==null) {
+        return ["No wayobj was detected between " + hm_found_desc.get_pos_str(key_str), null]
+      }
+      return [null, d[0]]
+    } else {
+      foreach(wt in hm_all_waytypes) {
+        foreach (c in wayobj_desc_x.get_available_wayobjs(wt)) {
+          if(c.get_name()==desc_name) {
+            return [null, c]
+          }
+        }
+      }
+      return ["Wayobj " + desc_name + " is not found!", null]
+    }
+  }
+  
   function exec(player, origin) {
-    local tl = command_x(tool_build_wayobj)
-    //return tl.work(player, origin+start, origin+ziel, desc_name)
-    local err = tl.work(player, origin+start, origin+ziel, desc_name)
+    local dr = _get_desc()
+    if(dr[0]!=null) {
+      return dr[0] // there was a error in obtaining the desc
+    }
+    local desc = dr[1]
+    local err = command_x.build_wayobj(player, origin+start, origin+ziel, desc)
     if(err!=null) {
       //calc_route() failed to find a path.
       return "Wayobj building path from (" + (origin+start).tostring() + ") to (" + (origin+ziel).tostring() + ") is not found!"

@@ -26,3 +26,21 @@ function hm_find_way(key, start, end) {
   local desc = ObjFinder(player, [start, end]).findWay()
   hm_found_desc().set("w" + key, desc, start, end)
 }
+
+// key prefix: "s"
+function hm_find_sign(key, start, end) {
+  local desc = ObjFinder(player, [start, end]).findSign()
+  hm_found_desc().set("s" + key, desc, start, end)
+}
+
+// key prefix: "p"
+function hm_find_station(key, start, end) {
+  local desc = ObjFinder(player, [start, end]).findPlatform()
+  hm_found_desc().set("p" + key, desc, start, end)
+}
+
+// key prefix: "c"
+function hm_find_wayobj(key, start, end) {
+  local desc = ObjFinder(player, [start, end]).findWayObj()
+  hm_found_desc().set("c" + key, desc, start, end)
+}
