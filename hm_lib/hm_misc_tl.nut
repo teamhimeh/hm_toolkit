@@ -13,7 +13,7 @@ class hm_rotate_building_tl extends hm_base_tl {
   }
 }
 
-class hm_show_message_tl extends hm_base_tl {
+class hm_error_message_tl extends hm_base_tl {
   text = null
   constructor(s) {
     text = s
@@ -21,5 +21,19 @@ class hm_show_message_tl extends hm_base_tl {
   }
   function exec(player, origin) {
     return text
+  }
+}
+
+class hm_chat_message_tl extends hm_base_tl {
+  text = null
+  pos = null
+  constructor(s, p) {
+    text = s
+    pos = coord3d(p[0], p[1], p[2])
+    hm_commands.append(this)
+  }
+  function exec(player, origin) {
+    gui.add_message_at(player, text, origin+pos);
+    return null
   }
 }
