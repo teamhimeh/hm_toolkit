@@ -6,7 +6,7 @@ include("hm_lib/hm_sign_tl")
 include("hm_lib/hm_station_tl")
 include("hm_lib/hm_remove_tl")
 include("hm_lib/hm_find_obj")
-
+include("hm_lib/hm_misc_tl")
 
 function init(pl) {
   this.player = pl

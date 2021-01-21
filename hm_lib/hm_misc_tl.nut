@@ -1,0 +1,25 @@
+include("hm_lib/hm_global")
+
+class hm_rotate_building_tl extends hm_base_tl {
+  pos = null
+  constructor(p) {
+    pos = coord3d(p[0],p[1],p[2])
+    hm_commands.append(this)
+  }
+  
+  function exec(player, origin) {
+    local tl = command_x(tool_rotate_building)
+    return tl.work(player, origin+pos)
+  }
+}
+
+class hm_show_message_tl extends hm_base_tl {
+  text = null
+  constructor(s) {
+    text = s
+    hm_commands.append(this)
+  }
+  function exec(player, origin) {
+    return text
+  }
+}
