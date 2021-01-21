@@ -1,5 +1,5 @@
 this.hm_commands <- [] // array to store the commands
-this.hm_all_waytypes <- [wt_road,wt_rail,wt_water,wt_monorail,wt_maglev,wt_tram,wt_narrowgauge,wt_air,wt_power]
+this.player <- null
 
 class hm_slope {
   N1 = 4

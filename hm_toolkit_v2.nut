@@ -5,16 +5,18 @@ include("hm_lib/hm_slope_tl")
 include("hm_lib/hm_sign_tl")
 include("hm_lib/hm_station_tl")
 include("hm_lib/hm_remove_tl")
+include("hm_lib/hm_find_obj")
 
 
-function init(player) {
+function init(pl) {
+  this.player = pl
   hm_build()
   return true
 }
 
-function work(player, pos) {
+function work(pl, pos) {
   foreach (cmd in hm_commands) {
-    local err = cmd.exec(player, pos)
+    local err = cmd.exec(pl, pos)
     if(err!=null && err.len()>0) {
       return err
     }
