@@ -1,11 +1,13 @@
 include("hm_lib/hm_global")
 include("hm_lib/hm_functions")
 include("hm_lib/hm_find_obj")
+include("hm_lib/hm_obj_selector")
 
 class hm_way_tl extends hm_base_tl {
   desc_name = null
   start = null
   ziel = null
+  
   constructor(d_name, s, z) {
     desc_name = d_name
     start = coord3d(s[0],s[1],s[2])
@@ -24,6 +26,13 @@ class hm_way_tl extends hm_base_tl {
         return ["No way was detected between " + hm_found_desc.get_pos_str(key_str), null]
       }
       return [null, d[0]]
+    } else if(desc_name.slice(0,2)=="?s") {
+      local idx = desc_name.slice(2).tointeger()
+      local d = hm_obj_selector().get_way_desc(idx)
+      if(d==null) {
+        return ["Selected way "+desc_name.slice(2)+" is not available.", null]
+      }
+      return [null, d]
     } else {
       local d = hm_get_way_desc(desc_name)
       if(d==null) {
