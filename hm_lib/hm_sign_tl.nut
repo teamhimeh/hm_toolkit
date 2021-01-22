@@ -23,6 +23,13 @@ class hm_sign_tl extends hm_base_tl {
         return ["No sign was detected between " + hm_found_desc.get_pos_str(key_str), null]
       }
       return [null, d[0]]
+    } else if(desc_name.slice(0,2)=="?s") {
+      local idx = desc_name.slice(2).tointeger()
+      local d = hm_sign_selector().get_desc(idx)
+      if(d==null) {
+        return ["Selected sign "+desc_name.slice(2)+" is not available.", null]
+      }
+      return [null, d]
     } else {
       local d = hm_get_sign_desc(desc_name)
       if(d==null) {

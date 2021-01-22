@@ -28,7 +28,7 @@ class hm_way_tl extends hm_base_tl {
       return [null, d[0]]
     } else if(desc_name.slice(0,2)=="?s") {
       local idx = desc_name.slice(2).tointeger()
-      local d = hm_obj_selector().get_way_desc(idx)
+      local d = hm_way_selector().get_desc(idx)
       if(d==null) {
         return ["Selected way "+desc_name.slice(2)+" is not available.", null]
       }

@@ -23,7 +23,16 @@ class hm_wayobj_tl extends hm_base_tl {
         return ["No wayobj was detected between " + hm_found_desc.get_pos_str(key_str), null]
       }
       return [null, d[0]]
-    } else {
+    }
+    else if(desc_name.slice(0,2)=="?s") {
+      local idx = desc_name.slice(2).tointeger()
+      local d = hm_wayobj_selector().get_desc(idx)
+      if(d==null) {
+        return ["Selected wayobj "+desc_name.slice(2)+" is not available.", null]
+      }
+      return [null, d]
+    }
+    else {
       foreach(wt in hm_all_waytypes) {
         foreach (c in wayobj_desc_x.get_available_wayobjs(wt)) {
           if(c.get_name()==desc_name) {
