@@ -109,6 +109,14 @@ j) エラーメッセージの表示
 
 例 ... hm_error_message_tl("All construction finished.")
 
+k) 関数実行ツール
+書式 ... hm_exec_func_tl(関数, パラメータ)
+
+引数に(player, pos, パラメータ) を取る関数を実行します．関数の戻り値がnull以外の場合，エラーメッセージとして処理されます．
+
+例 ... hm_exec_func_tl(((@pl, pos, str) gui.add_message_at(pl, str, pos)), "Hello, Simutrans!")
+この例では関数をラムダ式で渡しています．
+
 5. 特定範囲のオブジェクトからのアドオン名抽出
 マップ内の特定座標に軌道などを設置することで，アドオンを選択させることができます．アドオンやpakセットに依存しないため、高度の柔軟性を維持しつつ臨機応変に利用できます．
 

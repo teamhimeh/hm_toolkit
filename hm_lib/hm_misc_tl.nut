@@ -37,3 +37,16 @@ class hm_chat_message_tl extends hm_base_tl {
     return null
   }
 }
+
+class hm_exec_func_tl extends hm_base_tl {
+  func = null
+  param = null
+  constructor(f, p) {
+    func = f
+    param = p
+    hm_commands.append(this)
+  }
+  function exec(player, origin) {
+    return func(player, origin, param)
+  }
+}
