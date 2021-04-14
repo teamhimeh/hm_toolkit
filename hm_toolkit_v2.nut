@@ -1,6 +1,8 @@
 
 include("hm_lib/hm_way_tl")
 include("hm_lib/hm_wayobj_tl")
+include("hm_lib/hm_bridge_tl")
+include("hm_lib/hm_tunnel_tl")
 include("hm_lib/hm_slope_tl")
 include("hm_lib/hm_sign_tl")
 include("hm_lib/hm_station_tl")

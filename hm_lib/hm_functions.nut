@@ -14,6 +14,17 @@ function hm_get_way_desc(name) {
   return null
 }
 
+function hm_get_bridge_desc(name) {
+  foreach(wt in hm_all_waytypes) {
+    foreach (b in bridge_desc_x.get_available_bridges(wt)) {
+      if(b.get_name()==desc_name) {
+        return b
+      }
+    }
+  }
+  return null
+}
+
 function hm_get_sign_desc(name) {
   foreach(wt in hm_all_waytypes) {
     foreach (s in sign_desc_x.get_available_signs(wt)) {
